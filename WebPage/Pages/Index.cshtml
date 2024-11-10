@@ -1,0 +1,36 @@
+﻿@page "/"
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Login</h1>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="text-danger">@TempData["Message"]</div>
+    }
+    <form method="post">
+
+        <div>
+            <label class="form-label">Email</label>
+            <input type="text" name="email" />
+        </div>
+        <div>
+            <label class="form-label">Password</label>
+            <input type="password" name="password" />
+
+        </div>
+
+        <div>
+            <div>
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </div>
+            <div>
+                <a class="btn btn-outline-primary" href="/Index" role="button">Cancel</a>
+            </div>
+        </div>
+
+    </form>
+</div>

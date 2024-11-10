@@ -1,0 +1,107 @@
+﻿@page
+@model WebPage.Pages.CosmeticPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <a class="navbar-brand" href="#">MyApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSearch"
+            aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSearch">
+        <form class="form-inline ml-auto w-100" method="get">
+            <div class="input-group">
+                <input class="form-control border-end-0 rounded-left" type="search" placeholder="Search by name or description"
+                       aria-label="Search" asp-for="Query" style="max-width: 400px;">
+                <div class="input-group-append">
+                    <button class="btn btn-primary rounded-right" type="submit">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</nav>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CosmeticInformation[0].CosmeticName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CosmeticInformation[0].SkinType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CosmeticInformation[0].ExpirationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CosmeticInformation[0].CosmeticSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CosmeticInformation[0].DollarPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CosmeticInformation[0].Category)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.CosmeticInformation) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CosmeticName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SkinType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpirationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CosmeticSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DollarPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.CosmeticId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.CosmeticId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.CosmeticId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<!-- Phân trang -->
+<div class="pagination">
+    @if (Model.PageNumber > 1)
+    {
+        <a asp-page-handler="OnGetAsync" asp-route-pageNumber="@(Model.PageNumber - 1)">Previous</a>
+    }
+
+    <span> Page @Model.PageNumber </span>
+
+    @if (Model.HasNextPage)
+    {
+        <a asp-page-handler="OnGetAsync" asp-route-pageNumber="@(Model.PageNumber + 1)">Next</a>
+    }
+</div>
